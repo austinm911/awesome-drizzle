@@ -1,3 +1,8 @@
+import { getTableColumns } from 'drizzle-orm'
+import type { IndexColumn, PgInsertOnConflictDoUpdateConfig, PgInsertValue, PgTable } from 'drizzle-orm/pg-core'
+import type { SQLiteTable } from 'drizzle-orm/sqlite-core'
+import type { SQL } from 'drizzle-orm'
+
 /**
  * Generates the `set` object for the `onConflictDoUpdate` clause in upsert operations.
  *
