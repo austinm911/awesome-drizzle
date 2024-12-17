@@ -8,6 +8,11 @@ A collection of Drizzle related libraries, utilities, etc.
 - [Drizzle Toolbelt](https://github.com/fredericoo/drizzle-toolbelt) - a set of Drizzle related utilities
   - `takeFirst`, `takeFirstOrThrow`, `aggregate`, `transform`
 
+## Utilities
+
+- [upsert-record](./upsert-record.ts) - a utility function to perform an upsert operation on a database table using Drizzle ORM
+- [build-conflict-update-columns](./build-conflict-update-columns.ts) - a utility function to build the `set` object for the `onConflictDoUpdate` clause in upsert operations
+
 ## Contribution
 
-Please fell free to make a contribution by making a pull request.
+Please feel free to make a contribution by making a pull request.

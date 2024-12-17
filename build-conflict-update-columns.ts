@@ -1,7 +1,7 @@
-import { getTableColumns } from 'drizzle-orm'
-import type { IndexColumn, PgInsertOnConflictDoUpdateConfig, PgInsertValue, PgTable } from 'drizzle-orm/pg-core'
-import type { SQLiteTable } from 'drizzle-orm/sqlite-core'
-import type { SQL } from 'drizzle-orm'
+import { getTableColumns } from "drizzle-orm";
+import { type SQL, sql } from "drizzle-orm";
+import type { PgTable } from "drizzle-orm/pg-core";
+import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 
 /**
  * Generates the `set` object for the `onConflictDoUpdate` clause in upsert operations.
@@ -13,18 +13,23 @@ import type { SQL } from 'drizzle-orm'
  * @param excludeColumns An array of columns to exclude from the update.
  * @returns A record mapping column names to `excluded.<column>` SQL references.
  */
-export const buildConflictUpdateColumns = <T extends PgTable | SQLiteTable, Q extends keyof T['_']['columns']>(
+export const buildConflictUpdateColumns = <
+	T extends PgTable | SQLiteTable,
+	Q extends keyof T["_"]["columns"],
+>(
 	table: T,
 	excludeColumns: Q[],
 ) => {
-	const allColumns = getTableColumns(table)
-	const columnsToUpdate = Object.keys(allColumns).filter((column) => !excludeColumns.includes(column as Q))
+	const allColumns = getTableColumns(table);
+	const columnsToUpdate = Object.keys(allColumns).filter(
+		(column) => !excludeColumns.includes(column as Q),
+	);
 	return columnsToUpdate.reduce(
 		(acc, column) => {
-			const colName = allColumns[column].name
-			acc[column as Q] = sql.raw(`excluded.${colName}`)
-			return acc
+			const colName = allColumns[column].name;
+			acc[column as Q] = sql.raw(`excluded.${colName}`);
+			return acc;
 		},
 		{} as Record<Q, SQL>,
-	)
-}
+	);
+};
